@@ -1,0 +1,21 @@
+---
+
+- unarchive: src=ruby-2.2.3.tar.gz dest=/tmp creates=/tmp/ruby-2.2.3
+
+- name: configure ruby
+  command: creates=/tmp/ruby-2.2.3/config.status chdir=/tmp/ruby-2.2.3 ./configure
+
+- name: install ruby
+  command: creates=/usr/local/bin/ruby chdir=/tmp/ruby-2.2.3 make install
+
+- name: install mailcatcher
+  gem: name=mailcatcher state=latest executable=/usr/local/bin/gem user_install=no
+
+- name: set mailcatcher control script
+  template: src=mailcatcher.sh dest=/etc/init.d/mailcatcher mode=755
+
+- name: add mailcatcher service
+  command: chkconfig --add mailcatcher
+
+- name: start mailcatcher
+  command: service mailcatcher start

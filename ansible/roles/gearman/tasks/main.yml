@@ -1,0 +1,7 @@
+---
+
+- name: install gearmand
+  yum: pkg=gearmand state=installed
+
+- name: ensure gearmand is running
+  service: name=gearmand state=started enabled=true

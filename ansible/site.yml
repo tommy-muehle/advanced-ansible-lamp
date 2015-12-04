@@ -1,0 +1,13 @@
+---
+
+- name: Install an awesome project
+  hosts: all
+  roles:
+    - geerlingguy.repo-remi
+    - common
+    - httpd
+    - php
+    - mysql
+    - supervisord
+    - gearman
+    - mailcatcher

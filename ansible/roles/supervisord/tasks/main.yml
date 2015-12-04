@@ -1,0 +1,22 @@
+---
+
+- name: install python packages
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - python
+    - python-pip
+
+- name: install correct python-setuptools
+  command: curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python -
+  args:
+    creates: /usr/bin/easy_install
+
+- name: install supervisor
+  command: pip install supervisor
+  args:
+    creates: /usr/bin/supervisord
+
+- name: install superlance
+  command: pip install superlance
+  args:
+    creates: /usr/bin/memmon

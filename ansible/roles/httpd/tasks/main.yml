@@ -1,0 +1,20 @@
+---
+
+- name: install httpd packages
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - httpd
+    - mod_fcgid
+
+- name: create docroot /var/www/awesome/web
+  command: mkdir -p /var/www/awesome/web
+  args:
+    creates: /var/www/awesome/web
+
+- name: copy vhost template
+  template: src=default.conf dest=/etc/httpd/conf.d/10-default.conf
+  notify: restart httpd
+
+- name: remove welcome template
+  file: path=/etc/httpd/conf.d/welcome.conf state=absent
+  notify: restart httpd

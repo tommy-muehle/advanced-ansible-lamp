@@ -1,0 +1,16 @@
+---
+
+- name: install misc packages
+  yum: pkg={{ item }} state=installed
+  with_items:
+    - curl
+    - vim
+    - libyaml
+
+- name: check enforce
+  command: /usr/sbin/getenforce
+  register: is_enforce
+
+- name: disable selinux
+  command: /usr/sbin/setenforce 0
+  when: is_enforce == "Enabled"

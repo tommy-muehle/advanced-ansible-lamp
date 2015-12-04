@@ -1,0 +1,4 @@
+---
+
+- name: restart gearmand
+  action: service name=gearmand state=restarted enabled=yes
