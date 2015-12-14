@@ -1,21 +1,10 @@
 #!/bin/bash
 
-clear
-echo "Prepare for provisioning ..."
+sudo mkdir -p /etc/ansible
+printf '[vagrant]\nlocalhost\n' | sudo tee /etc/ansible/hosts > /dev/null
 
-if [ ! -f /root/.ansible/INSTALLED ]; then
-    sudo yum update -y ca-certificates > /dev/null 2>&1
-    sudo yum -y install epel-release > /dev/null 2>&1
-    sudo yum update > /dev/null 2>&1
-    sudo yum install -y python-devel python-pip libselinux-python > /dev/null 2>&1
-    sudo pip install --upgrade pip > /dev/null 2>&1
-    sudo pip install ansible > /dev/null 2>&1
-
-    sudo mkdir -p /etc/ansible
-    printf '[vagrant]\nlocalhost\n' | sudo tee /etc/ansible/hosts > /dev/null
-
-    sudo mkdir -p /root/.ansible
-    touch /root/.ansible/INSTALLED
+if [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
+    export PATH=$PATH:/usr/local/bin
 fi
 
 clear
