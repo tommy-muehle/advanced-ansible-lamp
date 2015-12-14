@@ -2,6 +2,8 @@
 
 - name: Install an awesome project
   hosts: all
+  environment:
+    PATH:$PATH:/usr/local/bin
   roles:
     - geerlingguy.repo-remi
     - common
